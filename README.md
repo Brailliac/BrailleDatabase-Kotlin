@@ -22,8 +22,6 @@ I am always looking for people to help add new languages and Braille codes!
 
 Go to https://github.com/Brailliac/BrailleDatabase/tree/master/java/com/lukeneedham/brailledatabase/brailledatabase/SymbolDatabases and create a new file named: \*SymbolDatabase.java where * is the name, in English, of the new Braille database. You can  copy the code from an existing SymbolDatabase file as a template, and tweak it for your new database.
 
-Check out the files in https://github.com/Brailliac/BrailleDatabase/tree/master/java/com/lukeneedham/brailledatabase/brailledatabase to see how the data classes work, in particular BrailleSymbolDataEntry.
-
 If you need any information, please contact me at brailletutorapp@gmail.com
 
 # Java

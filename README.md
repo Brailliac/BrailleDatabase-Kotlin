@@ -13,8 +13,9 @@ Currently featuring the following Braille codes:
 
 # Braille info
 
-The numbering of Braille dots is shown here:
-https://cdn.shopify.com/s/files/1/0543/5261/products/image_d1b3a9ff-bb2a-4fc6-bd63-46b1562d252c.jpg?v=1403641507
+The numbering of Braille dots is like:
+![alt text](https://cdn.shopify.com/s/files/1/0543/5261/products/image_d1b3a9ff-bb2a-4fc6-bd63-46b1562d252c.jpg?v=1403641507)
+
 
 # Adding new codes
 

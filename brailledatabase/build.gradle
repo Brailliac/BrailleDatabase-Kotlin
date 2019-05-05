@@ -6,7 +6,7 @@ android {
         config {
             keyAlias 'Brailliac'
             keyPassword 'm1%`d\'Sq,WLw].k7F NruHriw=_LYm'
-            storeFile file('C:/Users/Luke/Documents/Development/Android/Braille Keyboard/braillekeyboardkeystore.jks')
+            storeFile file('C:/Users/Luke/Documents/Development/Android/BrailleKeyboard/braillekeyboardkeystore.jks')
             storePassword 'UG.[R%P=^zOdA}X9^21Ckc+w:}#)t+'
         }
     }

@@ -41,6 +41,10 @@ abstract class BrailleDatabase
         res.toMap()
     }
 
+    val dictionaryTypes: List<DictionaryType> by lazy {
+        symbolTypes.keys.toList()
+    }
+
     val defaultPractise: List<BrailleSymbolDatabaseEntry> by lazy {
         val cats = dictionaryCategories
         val res = ArrayList<BrailleSymbolDatabaseEntry>()
@@ -357,5 +361,7 @@ abstract class BrailleDatabase
     {
         @JvmStatic
         val NO_STRING = ""
+        @JvmStatic
+        val BLANK_BRAILLE_SYMBOL = "\u2800"
     }
 }

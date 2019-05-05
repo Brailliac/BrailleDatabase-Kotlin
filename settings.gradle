@@ -1,1 +1,1 @@
-include ':app', ':brailledatabase'
+include ':app'

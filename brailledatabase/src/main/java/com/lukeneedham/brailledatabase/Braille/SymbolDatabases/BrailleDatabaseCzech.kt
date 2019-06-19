@@ -19,6 +19,8 @@ class BrailleDatabaseCzech : BrailleDatabase()
 
     override val canDoTranslation = true
 
+    override val wordSeparators = listOf(' ')
+
     /**
      * make the array of all the entries in the database
      * for each entry, make a new BrailleSymbolDatabaseEntry object, and pass the relevant paramaters

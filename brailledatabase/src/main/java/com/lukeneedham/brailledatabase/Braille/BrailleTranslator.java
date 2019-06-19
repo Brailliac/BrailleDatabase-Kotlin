@@ -52,16 +52,13 @@ public class BrailleTranslator
 	 */
 	public ArrayList<BrailleSymbolTranslation> translate(String input, BrailleCategoryUseList categoriesOn)
 	{
-		// Log.v("categoriesOn", categoriesOn.toString());
-		String[] words = input.split(" ");
-
 		ArrayList<BrailleSymbolTranslation> translations = new ArrayList<>();
 		BrailleSymbolTranslation base = new BrailleSymbolTranslation();
 		translations.add(base);
 
-		BrailleSymbolDatabaseEntry spaceDataEntry = database.getSpace();
+		List<String> wordsAndSpaces = splitByWordSeparators(input, database.getWordSeparators());
 
-		for (String word : words)
+		for (String word : wordsAndSpaces)
 		{
 			ArrayList<BrailleSymbolTranslation> translationsOfWord = translateWordToBraille(word, 0, categoriesOn);
 			translationsOfWord = filterTranslationsByUnknownCount(translationsOfWord);
@@ -75,7 +72,7 @@ public class BrailleTranslator
 				{
 					BrailleSymbolTranslation newTranslation = new BrailleSymbolTranslation();
 					newTranslation.concatenate(prevTrans);
-					if (prevTrans.length() != 0) newTranslation.add(spaceDataEntry);
+					//if (prevTrans.length() != 0) newTranslation.add(spaceDataEntry);
 					newTranslation.concatenate(currentWordTranslation);
 
 					newTotalTranslations.add(newTranslation);
@@ -85,6 +82,31 @@ public class BrailleTranslator
 		}
 
 		return translations;
+	}
+
+	private List<String> splitByWordSeparators(String input, List<Character> wordSeparators) {
+		List<String> words = new ArrayList<>();
+
+		StringBuilder currentWordBuilder = new StringBuilder();
+		char[] letters = input.toCharArray();
+		for(char letter : letters) {
+			if(wordSeparators.contains(letter)) {
+				String finishedWord = currentWordBuilder.toString();
+				words.add(finishedWord);
+				currentWordBuilder.setLength(0);
+
+				String separatorWord = letter + "";
+				words.add(separatorWord);
+			} else {
+				currentWordBuilder.append(letter);
+			}
+		}
+		String finalWord = currentWordBuilder.toString();
+		if(!finalWord.equals("")) {
+			words.add(finalWord);
+		}
+
+		return words;
 	}
 
 	private ArrayList<BrailleSymbolTranslation> translateWordToBraille(String input, int start, BrailleCategoryUseList categoriesOn)

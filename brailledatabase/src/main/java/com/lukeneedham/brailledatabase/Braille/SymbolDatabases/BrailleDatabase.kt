@@ -78,6 +78,8 @@ abstract class BrailleDatabase
 
     abstract val canDoTranslation: Boolean
 
+    abstract val wordSeparators: List<Char>
+
     val capitalSymbol by lazy { findSymbolDataByDescriptionFirst(R.string.braille_capital) }
 
     val capitalWordSymbol by lazy { findSymbolDataByDescriptionFirst(R.string.braille_capitalword) }

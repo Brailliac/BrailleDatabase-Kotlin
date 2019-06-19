@@ -28,3 +28,5 @@ If you need any information, please contact me at brailletutorapp@gmail.com
 # Java
 
 There is a also a Java version of this database, which is no longer maintained. It can be found here: https://github.com/Brailliac/BrailleDatabaseJava
+
+Copyright © 2019 Brailliac / Luke Needham

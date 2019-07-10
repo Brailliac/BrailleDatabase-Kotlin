@@ -84,7 +84,7 @@ public class BrailleTranslator
 		return translations;
 	}
 
-	private List<String> splitByWordSeparators(String input, List<Character> wordSeparators) {
+	public List<String> splitByWordSeparators(String input, List<Character> wordSeparators) {
 		List<String> words = new ArrayList<>();
 
 		StringBuilder currentWordBuilder = new StringBuilder();
@@ -92,7 +92,10 @@ public class BrailleTranslator
 		for(char letter : letters) {
 			if(wordSeparators.contains(letter)) {
 				String finishedWord = currentWordBuilder.toString();
-				words.add(finishedWord);
+				if(!finishedWord.equals("")) {
+					words.add(finishedWord);
+				}
+
 				currentWordBuilder.setLength(0);
 
 				String separatorWord = letter + "";
@@ -140,15 +143,24 @@ public class BrailleTranslator
 
 				for (BrailleSymbolDatabaseEntry data : datas)
 				{
-					BrailleCategoryUseList.BrailleCategoryUse categoryUse = categoriesOn.getCategory(data.getCategory(database));
-					if (categoryUse != null)
-					{
+					DictionaryCategory category = data.getCategory(database);
+					if(category == null) {
+						// special symbol - always allowed
 						if (data.getRuleForUsage().isLegal(start, start + length, input))
 						{
 							translations.addAll(addNewTranslationsToCurrentTranslation(data, currentTranslationSoFar, start, input, categoriesOn));
-
 							someMatchFound = true;
-							stop = categoryUse.isForce();
+						}
+					} else {
+						BrailleCategoryUseList.BrailleCategoryUse categoryUse = categoriesOn.getCategory(category);
+						if (categoryUse != null)
+						{
+							if (data.getRuleForUsage().isLegal(start, start + length, input))
+							{
+								translations.addAll(addNewTranslationsToCurrentTranslation(data, currentTranslationSoFar, start, input, categoriesOn));
+								someMatchFound = true;
+								stop = categoryUse.isForce();
+							}
 						}
 					}
 				}

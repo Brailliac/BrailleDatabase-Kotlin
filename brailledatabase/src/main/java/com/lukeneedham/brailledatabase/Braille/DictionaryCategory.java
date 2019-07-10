@@ -74,6 +74,9 @@ public class DictionaryCategory
 
 	public boolean equals(Object obj)
 	{
+		if(obj == null) {
+			return false;
+		}
 		try
 		{
 			DictionaryCategory cat = (DictionaryCategory) obj;

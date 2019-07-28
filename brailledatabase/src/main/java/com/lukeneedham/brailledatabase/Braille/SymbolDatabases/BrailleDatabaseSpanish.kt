@@ -493,7 +493,7 @@ class BrailleDatabaseSpanish : BrailleDatabase()
             textRepresented = ""
             dictionaryType = PUNCTUATION
             cells {
-                +Cell6
+                +Cell46
             }
             descriptiveNameRes = R.string.braille_capital
             onEntryClickType = SHOW_INFO

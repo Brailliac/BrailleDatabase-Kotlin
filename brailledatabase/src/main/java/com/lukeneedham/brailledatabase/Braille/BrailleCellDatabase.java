@@ -2,6 +2,7 @@ package com.lukeneedham.brailledatabase.Braille;
 
 import android.content.Context;
 
+// TODO migrate to enum
 public abstract class BrailleCellDatabase
 {
 	public static final BrailleCell CellEmpty = new BrailleCell(' ', false, false, false, false, false, false);

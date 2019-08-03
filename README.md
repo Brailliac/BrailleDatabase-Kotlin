@@ -11,6 +11,27 @@ Currently featuring the following Braille codes:
 - Swedish
 - Tamil
 
+# To Use:
+
+0. (If you aren't already using JitPack) Add JitPack in your root build.gradle, at the end of repositories:
+
+```
+allprojects {
+  repositories {
+    ...
+    maven { url 'https://jitpack.io' }
+  }
+}
+```
+  
+1. Add the dependency for the library:
+
+```
+dependencies {
+  implementation ("com.github.brailliac:brailledatabase-kotlin:1.0.8")
+}
+```
+
 # Braille info
 
 The numbering of Braille dots is like:

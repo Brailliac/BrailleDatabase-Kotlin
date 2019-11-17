@@ -24,7 +24,7 @@ class BrailleSymbolDatabaseEntry(val allTextsRepresented: List<String>, val dict
     val cells: Array<BrailleCell>
         get() = symbol.cells
 
-    val font: String
+    val brailleFont: String
         get() = symbol.font
 
 
@@ -42,10 +42,10 @@ class BrailleSymbolDatabaseEntry(val allTextsRepresented: List<String>, val dict
     {
         return when (onEntryClickType)
         {
-            BrailleSymbolDatabaseEntry.OnEntryClickType.SHOW_LETTERS_REP -> textRepresented
-            BrailleSymbolDatabaseEntry.OnEntryClickType.SHOW_INFO -> c.getString(extraInfoRes)
-            BrailleSymbolDatabaseEntry.OnEntryClickType.SHOW_USAGE_RULE -> getRuleDescription(c)
-            BrailleSymbolDatabaseEntry.OnEntryClickType.NOTHING -> ""
+            OnEntryClickType.SHOW_LETTERS_REP -> textRepresented
+            OnEntryClickType.SHOW_INFO -> c.getString(extraInfoRes)
+            OnEntryClickType.SHOW_USAGE_RULE -> getRuleDescription(c)
+            OnEntryClickType.NOTHING -> ""
         }
     }
 
@@ -81,15 +81,24 @@ class BrailleSymbolDatabaseEntry(val allTextsRepresented: List<String>, val dict
 
     override fun equals(other: Any?): Boolean
     {
-        if (this === other) return true
-        if (other == null || javaClass != other.javaClass) return false
-
-        val that = other as BrailleSymbolDatabaseEntry?
-
-        if (!symbol.equals(that!!.symbol)) return false
-        if (allTextsRepresented == that.allTextsRepresented)
+        if (this === other) {
+            return true
+        }
+        if (other == null || javaClass != other.javaClass) {
             return false
-        if (ruleForUsage != that.ruleForUsage) return false
+        }
+
+        val that = other as BrailleSymbolDatabaseEntry
+
+        if (!symbol.equals(that.symbol)) {
+            return false
+        }
+        if (allTextsRepresented != that.allTextsRepresented) {
+            return false
+        }
+        if (ruleForUsage != that.ruleForUsage) {
+            return false
+        }
         return dictionaryType == that.dictionaryType
     }
 
@@ -105,33 +114,15 @@ class BrailleSymbolDatabaseEntry(val allTextsRepresented: List<String>, val dict
     companion object
     {
         @JvmStatic
-        public fun LegacyConstructor(nameIn: String, typeIn: DictionaryType, onClick: BrailleSymbolDatabaseEntry.OnEntryClickType, vararg cellsIn: BrailleCell): BrailleSymbolDatabaseEntry
+        fun LegacyConstructor(nameIn: String, typeIn: DictionaryType, onClick: BrailleSymbolDatabaseEntry.OnEntryClickType, vararg cellsIn: BrailleCell): BrailleSymbolDatabaseEntry
         {
             return BrailleSymbolDatabaseEntry(allTextsRepresented = listOf(nameIn), dictionaryType = typeIn, onEntryClickType = onClick, cells = listOf(*cellsIn))
         }
 
         @JvmStatic
-        public fun LegacyConstructor(nameIn: String, ruleForUsageIn: BrailleSymbolUsageRule, typeIn: DictionaryType, onClick: BrailleSymbolDatabaseEntry.OnEntryClickType, vararg cellsIn: BrailleCell): BrailleSymbolDatabaseEntry
-        {
-            return BrailleSymbolDatabaseEntry(allTextsRepresented = listOf(nameIn), ruleForUsage = ruleForUsageIn, dictionaryType = typeIn, onEntryClickType = onClick, cells = listOf(*cellsIn))
-        }
-
-        @JvmStatic
-        public fun LegacyConstructor(nameIn: String, descRes: Int, typeIn: DictionaryType, onClick: BrailleSymbolDatabaseEntry.OnEntryClickType, vararg cellsIn: BrailleCell): BrailleSymbolDatabaseEntry
+        fun LegacyConstructor(nameIn: String, descRes: Int, typeIn: DictionaryType, onClick: BrailleSymbolDatabaseEntry.OnEntryClickType, vararg cellsIn: BrailleCell): BrailleSymbolDatabaseEntry
         {
             return BrailleSymbolDatabaseEntry(allTextsRepresented = listOf(nameIn), descriptiveNameRes = descRes, dictionaryType = typeIn, onEntryClickType = onClick, cells = listOf(*cellsIn))
-        }
-
-        @JvmStatic
-        public fun LegacyConstructor(nameIn: Array<String>, ruleForUsageIn: BrailleSymbolUsageRule, typeIn: DictionaryType, onClick: BrailleSymbolDatabaseEntry.OnEntryClickType, vararg cellsIn: BrailleCell): BrailleSymbolDatabaseEntry
-        {
-            return BrailleSymbolDatabaseEntry(allTextsRepresented = nameIn.toList(), ruleForUsage = ruleForUsageIn, dictionaryType = typeIn, onEntryClickType = onClick, cells = listOf(*cellsIn))
-        }
-
-        @JvmStatic
-        public fun LegacyConstructor(symbol: BrailleSymbol, possibleLettersRepresented: Array<String>, descriptiveNameRes: Int, ruleForUsage: BrailleSymbolUsageRule, dictionaryType: DictionaryType, onEntryClickType: BrailleSymbolDatabaseEntry.OnEntryClickType, extraInfoRes: Int, fillEntryWidth: Boolean): BrailleSymbolDatabaseEntry
-        {
-            return BrailleSymbolDatabaseEntry(allTextsRepresented = possibleLettersRepresented.toList(), cells = symbol.cells.toList(), descriptiveNameRes = descriptiveNameRes, ruleForUsage = ruleForUsage, dictionaryType = dictionaryType, onEntryClickType = onEntryClickType, extraInfoRes = extraInfoRes, fillEntryWidth = fillEntryWidth)
         }
     }
 }

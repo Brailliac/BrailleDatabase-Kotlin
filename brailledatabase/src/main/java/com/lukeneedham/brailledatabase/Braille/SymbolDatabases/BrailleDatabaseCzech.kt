@@ -19,7 +19,7 @@ class BrailleDatabaseCzech : BrailleDatabase()
 
     override val canDoTranslation = true
 
-    override val wordSeparators = listOf(' ')
+    override val wordSeparators = listOf(" ")
 
     /**
      * make the array of all the entries in the database

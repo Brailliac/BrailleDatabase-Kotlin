@@ -23,7 +23,7 @@ class BrailleDatabaseUEB : BrailleDatabase()
 
     override val canDoTranslation = true
 
-    override val wordSeparators = listOf(' ')
+    override val wordSeparators = listOf(" ")
 
     override val symbols = entries {
         symbol {

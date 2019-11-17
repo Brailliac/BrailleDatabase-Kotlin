@@ -56,7 +56,7 @@ public class BrailleTranslator
 		BrailleSymbolTranslation base = new BrailleSymbolTranslation();
 		translations.add(base);
 
-		List<String> wordsAndSpaces = splitByWordSeparators(input, database.getWordSeparators());
+		List<String> wordsAndSpaces = splitByWordSeparators(input);
 
 		for (String word : wordsAndSpaces)
 		{
@@ -84,12 +84,17 @@ public class BrailleTranslator
 		return translations;
 	}
 
-	public List<String> splitByWordSeparators(String input, List<Character> wordSeparators) {
+	public List<String> splitByWordSeparators(String input) {
+		return splitBy(input, database.getWordSeparators());
+	}
+
+	private List<String> splitBy(String input, List<String> wordSeparators) {
 		List<String> words = new ArrayList<>();
 
 		StringBuilder currentWordBuilder = new StringBuilder();
 		char[] letters = input.toCharArray();
-		for(char letter : letters) {
+		for(char letterChar : letters) {
+			String letter = letterChar + "";
 			if(wordSeparators.contains(letter)) {
 				String finishedWord = currentWordBuilder.toString();
 				if(!finishedWord.equals("")) {

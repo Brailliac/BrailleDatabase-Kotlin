@@ -78,7 +78,7 @@ abstract class BrailleDatabase
 
     abstract val canDoTranslation: Boolean
 
-    abstract val wordSeparators: List<Char>
+    abstract val wordSeparators: List<String>
 
     val capitalSymbol by lazy { findSymbolDataByDescriptionFirst(R.string.braille_capital) }
 
@@ -113,10 +113,15 @@ abstract class BrailleDatabase
         return symbols
     }
 
+    fun isWordSeparator(symbol: BrailleSymbolDatabaseEntry) =
+            symbol.allTextsRepresented.any { it in wordSeparators }
+
+    fun isWordSeparator(text: String) = text in wordSeparators
+
     fun findSymbolDataByLettersRepresented(`in`: String): List<BrailleSymbolDatabaseEntry>
     {
         val res = ArrayList<BrailleSymbolDatabaseEntry>()
-        for (i in 0 until symbols.size)
+        for (i in symbols.indices)
         {
             if (symbols[i].textRepresented == `in`)
             {
@@ -161,7 +166,7 @@ abstract class BrailleDatabase
         {
             val current = symbols[i]
 
-            if (font == current.font)
+            if (font == current.brailleFont)
             {
                 symbols.add(current)
             }

@@ -97,7 +97,7 @@ public class BrailleSymbolTranslation
 			String lettersRep = entry.getTextRepresented();
 			if (lettersRep.equals(BrailleDatabase.Companion.getNO_STRING()))
 			{
-				res += entry.getFont();
+				res += entry.getBrailleFont();
 			}
 			else
 			{
@@ -131,7 +131,7 @@ public class BrailleSymbolTranslation
 				{
 					if (lettersRep.equals(BrailleDatabase.Companion.getNO_STRING()))
 					{
-						res += Pattern.quote(entry.getFont());
+						res += Pattern.quote(entry.getBrailleFont());
 					}
 					else
 					{
@@ -153,12 +153,12 @@ public class BrailleSymbolTranslation
 		return translation.size();
 	}
 
-	public String getFont()
+	public String getBrailleFont()
 	{
 		StringBuilder tran = new StringBuilder();
 		for (BrailleSymbolDatabaseEntry data : translation)
 		{
-			tran.append(data.getFont());
+			tran.append(data.getBrailleFont());
 		}
 		return tran.toString();
 	}
@@ -213,6 +213,41 @@ public class BrailleSymbolTranslation
 			tran.append(data.getTextRepresented());
 		}
 		return tran.toString();
+	}
+
+	public List<BrailleSymbolTranslation> getWordTranslations(BrailleDatabase database) {
+		return splitTranslationByWordSeparators(database);
+	}
+
+	private List<BrailleSymbolTranslation> splitTranslationByWordSeparators(BrailleDatabase database) {
+		List<BrailleSymbolTranslation> words = new ArrayList<>();
+
+		List<BrailleSymbolDatabaseEntry> currentWordBuilder = new ArrayList<>();
+
+		for (BrailleSymbolDatabaseEntry data : translation)
+		{
+			if(database.isWordSeparator(data)) {
+				BrailleSymbolTranslation finishedWord = new BrailleSymbolTranslation(currentWordBuilder);
+				if(finishedWord.length() > 0) {
+					words.add(finishedWord);
+				}
+
+				currentWordBuilder.clear();
+
+				List<BrailleSymbolDatabaseEntry> separatorTranslationList = new ArrayList<>();
+				separatorTranslationList.add(data);
+				BrailleSymbolTranslation separatorTranslation = new BrailleSymbolTranslation(separatorTranslationList);
+				words.add(separatorTranslation);
+			} else {
+				currentWordBuilder.add(data);
+			}
+		}
+		BrailleSymbolTranslation finalWordTranslation = new BrailleSymbolTranslation(currentWordBuilder);
+		if(finalWordTranslation.length() > 0) {
+			words.add(finalWordTranslation);
+		}
+
+		return words;
 	}
 
 	/**

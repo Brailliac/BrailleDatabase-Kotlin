@@ -8,8 +8,7 @@ import java.util.Arrays;
 
 public class BrailleCell
 {
-    private boolean[] dots = new boolean[6];
-    private char fontSymbol;
+    public boolean[] dots = new boolean[6];
 
     public BrailleCell(boolean d1, boolean d2, boolean d3, boolean d4, boolean d5, boolean d6)
     {
@@ -19,34 +18,6 @@ public class BrailleCell
         dots[3] = d4;
         dots[4] = d5;
         dots[5] = d6;
-    }
-
-    public BrailleCell(char font, boolean d1, boolean d2, boolean d3, boolean d4, boolean d5, boolean d6)
-    {
-        fontSymbol = font;
-        dots[0] = d1;
-        dots[1] = d2;
-        dots[2] = d3;
-        dots[3] = d4;
-        dots[4] = d5;
-        dots[5] = d6;
-    }
-
-    public char getUnicodeCellSymbol()
-	{
-		int total = 10240;
-		for(int i = 0; i < dots.length; i++)
-		{
-			int score = (int) Math.pow(2, i);
-			if(dots[i]) total += score;
-		}
-
-		return (char) total;
-	}
-
-    public char getFontSymbol()
-    {
-        return fontSymbol;
     }
 
     public BrailleCell(boolean[] dotsIn)
@@ -62,22 +33,14 @@ public class BrailleCell
         return dots[dotNumber];
     }
 
-    public boolean equals(BrailleCell bc)
+    public boolean equals(Object o)
     {
-        if(bc == null) return false;
-        boolean equal = true;
-        for (int i = 0; i < 6 && equal == true; i++)
-        {
-            boolean currentDot = dots[i];
-            if (currentDot == bc.getDotAt(i))
-            {
-            }
-            else
-            {
-                equal = false;
-            }
+        if(!(o instanceof BrailleCell)) {
+            return false;
         }
-        return equal;
+        BrailleCell bc = (BrailleCell) o;
+
+        return Arrays.equals(this.dots, bc.dots);
     }
 
     public String getDotsDescription(Context c)
@@ -98,18 +61,7 @@ public class BrailleCell
 
     public String toString()
     {
-        return ""+getUnicodeCellSymbol();
-    }
-
-    @Override
-    public boolean equals(Object o)
-    {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        BrailleCell that = (BrailleCell) o;
-
-        return Arrays.equals(dots, that.dots);
+        return Arrays.toString(dots);
     }
 
     @Override

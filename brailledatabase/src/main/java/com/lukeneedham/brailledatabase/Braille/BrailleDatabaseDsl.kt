@@ -65,7 +65,7 @@ object BrailleDatabaseDsl
             return dictionaryType
         }
 
-        private fun validateCells(cells: List<BrailleCell>?): List<BrailleCell>
+        private fun validateCells(cells: List<BrailleCellDatabaseEntry>?): List<BrailleCellDatabaseEntry>
         {
             if (cells == null || cells.isEmpty())
             {
@@ -76,9 +76,9 @@ object BrailleDatabaseDsl
     }
 
     @BrailleDatabaseDsl
-    class Cells : ArrayList<BrailleCell>()
+    class Cells : ArrayList<BrailleCellDatabaseEntry>()
     {
-        operator fun BrailleCell.unaryPlus()
+        operator fun BrailleCellDatabaseEntry.unaryPlus()
         {
             add(this)
         }

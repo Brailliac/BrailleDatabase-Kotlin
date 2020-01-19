@@ -84,6 +84,17 @@ public class BrailleTranslator
 		return translations;
 	}
 
+	public List<String> splitByAndRemoveWordSeparators(String input) {
+		List<String> splitByWordSeparators = splitBy(input, database.getWordSeparators());
+		List<String> result = new ArrayList<>();
+		for(String word : splitByWordSeparators) {
+			if(!database.isWordSeparator(word)) {
+				result.add(word);
+			}
+		}
+		return result;
+	}
+
 	public List<String> splitByWordSeparators(String input) {
 		return splitBy(input, database.getWordSeparators());
 	}
@@ -174,7 +185,7 @@ public class BrailleTranslator
 			{
 				String noMatchFor = input.substring(start, start + 1);
 				Log.v("noMatchFor", noMatchFor);
-				BrailleSymbolDatabaseEntry unknownEntry = BrailleSymbolDatabaseEntry.Companion.LegacyConstructor(noMatchFor, R.string.braille_unknown, DictionaryType.UNKNOWN, BrailleSymbolDatabaseEntry.OnEntryClickType.NOTHING, new BrailleCell[]{null});
+				BrailleSymbolDatabaseEntry unknownEntry = BrailleSymbolDatabaseEntry.Companion.LegacyConstructor(noMatchFor, R.string.braille_unknown, DictionaryType.UNKNOWN, BrailleSymbolDatabaseEntry.OnEntryClickType.NOTHING, new BrailleCellDatabaseEntry[]{null});
 
 				translations.addAll(addNewTranslationsToCurrentTranslation(unknownEntry, currentTranslationSoFar, start, input, categoriesOn));
 			}
@@ -252,7 +263,7 @@ public class BrailleTranslator
 
 	/** Translation from cells **/
 
-	public ArrayList<String> translateCellsToLatin(List<BrailleCell> cells)
+	public ArrayList<String> translateCellsToLatin(List<BrailleCellDatabaseEntry> cells)
 	{
 		List<BrailleSymbolTranslation> combinedTranslations = translateCellsToDataEntries(cells);
 
@@ -264,21 +275,21 @@ public class BrailleTranslator
 		return res;
 	}
 
-	public List<BrailleSymbolTranslation> translateCellsToDataEntries(List<BrailleCell> cells)
+	public List<BrailleSymbolTranslation> translateCellsToDataEntries(List<BrailleCellDatabaseEntry> cells)
 	{
 		cells = new ArrayList<>(cells);
 		cells.add(CellEmpty);
-		List<List<BrailleCell>> cellWords = new ArrayList<>();
+		List<List<BrailleCellDatabaseEntry>> cellWords = new ArrayList<>();
 
 		// Log.v("cells", ":" + cells.toString());
 
 		int lastChopPos = 0;
 		for (int i = 0; i < cells.size(); i++)
 		{
-			BrailleCell cell = cells.get(i);
+			BrailleCellDatabaseEntry cell = cells.get(i);
 			if (cell == CellEmpty)
 			{
-				List<BrailleCell> word = cells.subList(lastChopPos, i);
+				List<BrailleCellDatabaseEntry> word = cells.subList(lastChopPos, i);
 				cellWords.add(word);
 				lastChopPos = i + 1;
 			}
@@ -289,7 +300,7 @@ public class BrailleTranslator
 		List<BrailleSymbolTranslation> combinedTranslations = new ArrayList<>();
 		combinedTranslations.add(new BrailleSymbolTranslation());
 
-		for (List<BrailleCell> word : cellWords)
+		for (List<BrailleCellDatabaseEntry> word : cellWords)
 		{
 			List<BrailleSymbolTranslation> wordTranslations = translateWordCellsToDataEntries(word);
 			ArrayList<BrailleSymbolTranslation> newCombinedTranslations = new ArrayList<>();
@@ -309,7 +320,7 @@ public class BrailleTranslator
 		return combinedTranslations;
 	}
 
-	private List<BrailleSymbolTranslation> translateWordCellsToDataEntries(List<BrailleCell> cells)
+	private List<BrailleSymbolTranslation> translateWordCellsToDataEntries(List<BrailleCellDatabaseEntry> cells)
 	{
 		List<BrailleSymbolTranslation> currentTranslations = new ArrayList<>();
 		currentTranslations.add(new BrailleSymbolTranslation());
@@ -319,7 +330,7 @@ public class BrailleTranslator
 		return res;
 	}
 
-	private List<BrailleSymbolTranslation> translateWordCellsToDataEntries(List<BrailleCell> cells, List<BrailleSymbolTranslation> previousTranslations, int startPos)
+	private List<BrailleSymbolTranslation> translateWordCellsToDataEntries(List<BrailleCellDatabaseEntry> cells, List<BrailleSymbolTranslation> previousTranslations, int startPos)
 	{
 		// Log.v("previousTranslations", previousTranslations.toString());
 
@@ -339,7 +350,7 @@ public class BrailleTranslator
 				List<BrailleSymbolTranslation> currentTranslations = new ArrayList<>();
 
 				int endPos = startPos + currentLength;
-				List<BrailleCell> currentCells = cells.subList(startPos, endPos);
+				List<BrailleCellDatabaseEntry> currentCells = cells.subList(startPos, endPos);
 				BrailleSymbol symbol = new BrailleSymbol(currentCells);
 
 				List<BrailleSymbolDatabaseEntry> entries = database.findSymbolDataBySymbol(symbol);

@@ -10,7 +10,7 @@ import java.util.Arrays
 /**
  * Created by Luke on 30/07/2016.
  */
-class BrailleSymbolDatabaseEntry(val allTextsRepresented: List<String>, val dictionaryType: DictionaryType, cells: List<BrailleCell>, val ruleForUsage: BrailleSymbolUsageRule = BrailleSymbolUsageRule.ANYWHERE, val descriptiveNameRes: Int = 0, val onEntryClickType: OnEntryClickType = OnEntryClickType.NOTHING, val extraInfoRes: Int = 0, val fillEntryWidth: Boolean = false, val symbolModifierType: BrailleSymbolModifierType = BrailleSymbolModifierType.NONE)
+class BrailleSymbolDatabaseEntry(val allTextsRepresented: List<String>, val dictionaryType: DictionaryType, cells: List<BrailleCellDatabaseEntry>, val ruleForUsage: BrailleSymbolUsageRule = BrailleSymbolUsageRule.ANYWHERE, val descriptiveNameRes: Int = 0, val onEntryClickType: OnEntryClickType = OnEntryClickType.NOTHING, val extraInfoRes: Int = 0, val fillEntryWidth: Boolean = false, val symbolModifierType: BrailleSymbolModifierType = BrailleSymbolModifierType.NONE)
 {
     val symbol = BrailleSymbol(cells)
     // the literal ascii to be read when reading this symbol - like "and", "?". Use NO_STRING when the symbol has to literal meaning (modifiers)
@@ -21,7 +21,7 @@ class BrailleSymbolDatabaseEntry(val allTextsRepresented: List<String>, val dict
     val textRepresented: String
         get() = allTextsRepresented.first()
 
-    val cells: Array<BrailleCell>
+    val cells: Array<BrailleCellDatabaseEntry>
         get() = symbol.cells
 
     val brailleFont: String
@@ -114,13 +114,13 @@ class BrailleSymbolDatabaseEntry(val allTextsRepresented: List<String>, val dict
     companion object
     {
         @JvmStatic
-        fun LegacyConstructor(nameIn: String, typeIn: DictionaryType, onClick: BrailleSymbolDatabaseEntry.OnEntryClickType, vararg cellsIn: BrailleCell): BrailleSymbolDatabaseEntry
+        fun LegacyConstructor(nameIn: String, typeIn: DictionaryType, onClick: BrailleSymbolDatabaseEntry.OnEntryClickType, vararg cellsIn: BrailleCellDatabaseEntry): BrailleSymbolDatabaseEntry
         {
             return BrailleSymbolDatabaseEntry(allTextsRepresented = listOf(nameIn), dictionaryType = typeIn, onEntryClickType = onClick, cells = listOf(*cellsIn))
         }
 
         @JvmStatic
-        fun LegacyConstructor(nameIn: String, descRes: Int, typeIn: DictionaryType, onClick: BrailleSymbolDatabaseEntry.OnEntryClickType, vararg cellsIn: BrailleCell): BrailleSymbolDatabaseEntry
+        fun LegacyConstructor(nameIn: String, descRes: Int, typeIn: DictionaryType, onClick: BrailleSymbolDatabaseEntry.OnEntryClickType, vararg cellsIn: BrailleCellDatabaseEntry): BrailleSymbolDatabaseEntry
         {
             return BrailleSymbolDatabaseEntry(allTextsRepresented = listOf(nameIn), descriptiveNameRes = descRes, dictionaryType = typeIn, onEntryClickType = onClick, cells = listOf(*cellsIn))
         }

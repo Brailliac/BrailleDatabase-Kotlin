@@ -346,19 +346,19 @@ class BrailleDatabaseSpanish : BrailleDatabase()
             }
         }
         symbol {
-            textRepresented = "."
+            textRepresented = ","
             dictionaryType = NUMBER
             cells {
-                +Cell256
+                +Cell2
             }
             descriptiveNameRes = R.string.braille_decimal_point
             onEntryClickType = SHOW_LETTERS_REP
         }
         symbol {
-            textRepresented = ","
+            textRepresented = "."
             dictionaryType = NUMBER
             cells {
-                +Cell2
+                +Cell3
             }
             descriptiveNameRes = R.string.braille_thousands_separator
             onEntryClickType = SHOW_LETTERS_REP
